@@ -1,0 +1,123 @@
+<?php
+// Importar as classes 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+// Carregar o autoloader do composer
+require 'vendor/autoload.php';
+
+function mailReseteSenha($nome, $email, $login, $senha, $assunto){
+
+        // Instância da classe
+        $mail = new PHPMailer(true);
+        try
+        {
+            // Configurações do servidor
+            $mail->isSMTP();
+
+            // Informações específicas
+            $mail->CharSet = "UTF-8";
+            $mail->Host = '172.22.0.162';
+
+            // Define o remetente
+            $mail->setFrom('portal.pesquisas@ceadis.org.br', 'CEADIS - Portal Pesquisas');
+
+            // Define o destinatário
+
+            $mail->addAddress($email, $nome);
+
+            // E-mail oculto
+            $mail->addBCC('ariel.santosti@ceadis.org.br', 'Ariel Teste');
+            
+            // Conteúdo da mensagem
+            $mail->isHTML();  // Seta o formato do e-mail para aceitar conteúdo HTML
+
+            $mail->Subject = $assunto;
+            $mail->Body    = "Olá $nome,<br><br>Segue sua nova senha de acesso ao <strong>Portal Pesquisas - CEADIS</strong><br><br>
+                                
+                                Login: <strong>$login</strong><br>
+                                Senha provisória: <strong>$senha</strong><br><br>
+                                Link: http://ceadis.org.br/painel-pesquisa/<br><br>
+                                
+                                <u> Por favor, não responder este e-mail.</u>";
+       
+            // Enviar
+            $mail->send();
+            
+        }
+        catch (Exception $e)
+        {
+            //print $e->getMessage();
+            return FALSE;
+        }
+        
+        return TRUE;
+}
+
+function mailNotificacao($assunto_pesquisa, $titulo_pesquisa, $email, $primeiro_nome, $login, $tempo_estimado){
+//function mailNotificacao($titulo_pesquisa, $emails_pesquisa, $assunto_pesquisa){
+
+    // Instância da classe
+    $mail = new PHPMailer(true);
+    try
+    {
+        // Configurações do servidor
+        $mail->isSMTP();
+
+        // Informações específicas
+        $mail->CharSet = "UTF-8";
+        $mail->Host = '172.22.0.162';
+
+        // Define o remetente
+        $mail->setFrom('portal.pesquisas@ceadis.org.br', 'Portal Pesquisas');
+
+        // Define o destinatário
+
+        $mail->addAddress($email, $primeiro_nome);
+
+        // E-mail oculto
+        $mail->addBCC('ariel.santos@ceadis.org.br', $primeiro_nome);
+
+        $mail->AddEmbeddedImage('../assets/img/assinatura-email.png', 'Assinatura'); 
+        $mail->AddEmbeddedImage('../assets/img/favicon.png', 'Logotipo');
+	$mail->AddEmbeddedIamge('../assets/img/pesquisa.jpg', 'Pesquisa');
+        
+        // Conteúdo da mensagem
+        $mail->isHTML();  // Seta o formato do e-mail para aceitar conteúdo HTML
+
+        $mail->Subject = $assunto_pesquisa;
+        $mail->Body    = "Olá $primeiro_nome,<br><br>
+        
+				Nossa Pesquisa de Satisfação está de cara nova!!!<br><br>
+				Ela estará disponível até o dia 02/02/2024. Contamos com a sua colaboração, é bem rapidinho, não levará mais que 3 minutos para responder!<br><br>
+				<strong>Seu login:</strong> $login <u>(A senha inicial é a mesma utilizada no Portal Estoque Web)</u><br><br>
+
+				<strong>Link de acesso:</strong> http://ceadis.org.br/painel-pesquisa<br><br>
+				<table>
+					<td>
+						
+				</table>
+
+
+
+                            Atenciosamente,<br>
+
+                            <table>
+                            <td><img src='cid:Assinatura'/>  </td>
+                            <td><strong>E-mail:</strong> qualidade@ceadis.org.br<br>
+                            <strong>Telefone:</strong> 11 3646-5649<br>
+                            <strong>Endereço:</strong> Avenida Engenheiro Roberto Zuccolo, 21 - São Paulo – SP</td>
+                            </table>";
+                            
+   
+        // Enviar
+        $mail->send();
+        
+    }
+    catch (Exception $e)
+    {
+        //print $e->getMessage();
+        return FALSE;
+    }
+    
+    return TRUE;
+}
