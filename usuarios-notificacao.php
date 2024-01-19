@@ -78,7 +78,7 @@ if(isset($_GET['msg']) && $_GET['msg'] == 'erro-b'){
                     <th scope="col">Login</th>
                     <th scope="col">Unidade</th>
                     <th scope="col">E-mail</th>
-                    <th scope="col">Respondeu</th>
+                    <th scope="col"><span id="contador"></span>Respondeu</th>
                     <th scope="col"><a id="btn-check" onclick="check()"><i class='bi bi-check'></i>Marcar</a></th>
                   </tr>
                 </thead>
@@ -173,6 +173,17 @@ if(isset($_GET['msg']) && $_GET['msg'] == 'erro-b'){
       }
       
     }
+
+    // O CODIGO ABAIXO APRESENTA O CONTADOR SOBRE A PALAVRA RESPONDEU
+    var respondeu = 0;
+    var respondeu = document.getElementsByClassName("text-success").length;
+
+    var naorespondeu = document.getElementsByClassName("text-danger").length;
+    
+    var total = <?= $qtd_usuarios_pesquisa ?>;
+
+    document.getElementById("contador").innerHTML = respondeu +'/'+ total +'<br>';
+
   </script>
 
 
