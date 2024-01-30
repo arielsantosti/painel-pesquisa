@@ -26,7 +26,7 @@ function mailReseteSenha($nome, $email, $login, $senha, $assunto){
             $mail->addAddress($email, $nome);
 
             // E-mail oculto
-            $mail->addBCC('ariel.santosti@ceadis.org.br', 'Ariel Teste');
+            $mail->addBCC('sistemas@ceadis.org.br', $nome);
 
             // Conteúdo da mensagem
             $mail->isHTML();  // Seta o formato do e-mail para aceitar conteúdo HTML
@@ -75,7 +75,7 @@ function mailNotificacao($assunto_pesquisa, $titulo_pesquisa, $email, $primeiro_
         $mail->addAddress($email, $primeiro_nome);
 
         // E-mail oculto
-        $mail->addBCC('ariel.santos@ceadis.org.br', $primeiro_nome);
+        $mail->addBCC('sistemas@ceadis.org.br', $primeiro_nome);
 
         $mail->AddEmbeddedImage('../assets/img/assinatura-email.png', 'Assinatura');
         $mail->AddEmbeddedImage('../assets/img/favicon.png', 'Logotipo');
